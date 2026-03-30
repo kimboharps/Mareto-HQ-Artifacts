@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mareto HQ Help Centre</title>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Lato', -apple-system, BlinkMacSystemFont, sans-serif; background: #f0f2f5; color: #1a1a2e; font-size: 14px; }
+
+  /* ── Layout ── */
+  .app { display: flex; flex-direction: column; height: 100vh; }
+  .header { display: flex; align-items: center; justify-content: space-between; background: #fff; border-bottom: 1px solid #e2e8f0; padding: 10px 24px; height: 56px; z-index: 10; }
+  .header-left { display: flex; align-items: center; gap: 12px; }
+  .header-left .logo { width: 36px; height: 36px; background: #0B1F33; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+  .header-left .logo svg { width: 20px; height: 20px; }
+  .header-left h1 { font-size: 20px; font-weight: 700; color: #0B1F33; }
+  .header-left .powered { font-size: 12px; color: #14B8A6; font-weight: 500; margin-left: -4px; }
+  .avatar { width: 36px; height: 36px; border-radius: 50%; background: #14B8A6; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 13px; }
+
+  /* ── Body ── */
+  .body-wrap { display: flex; flex: 1; overflow: hidden; }
+
+  /* ── Main ── */
+  .main { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
+
+  /* ── Tabs ── */
+  .tabs { display: flex; gap: 0; background: #fff; border-bottom: 1px solid #e2e8f0; padding: 0 24px; }
+  .tab { padding: 14px 18px; font-size: 13px; font-weight: 500; color: #64748b; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; }
+  .tab:hover { color: #0B1F33; }
+  .tab.active { color: #14B8A6; border-bottom-color: #14B8A6; font-weight: 600; }
+
+  /* ── Tab Content ── */
+  .tab-content { display: none; padding: 28px 32px; flex: 1; }
+  .tab-content.active { display: block; }
+
+  /* ── HQ Home ── */
+  .welcome-banner { background: linear-gradient(to right, #0B1F33 0%, #0e2a3f 30%, #0f3d45 60%, #11756a 85%, #14B8A6 100%); border-radius: 0; padding: 24px 32px; margin: 0 -32px 24px -32px; }
+  .welcome-banner .greeting { font-size: 14px; color: rgba(255,255,255,0.85); }
+  .welcome-banner .greeting strong { color: #14B8A6; }
+  .welcome-banner .date { font-size: 12px; color: #14B8A6; margin-top: 2px; }
+  .welcome-banner h2 { font-size: 26px; font-weight: 700; color: #fff; margin-top: 12px; }
+  .welcome-banner .subtitle { font-size: 14px; color: rgba(255,255,255,0.8); margin-top: 4px; }
+  .search-box { margin-top: 16px; display: flex; align-items: center; background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px 16px; gap: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .search-box svg { width: 18px; height: 18px; color: #94a3b8; flex-shrink: 0; }
+  .search-box input { border: none; outline: none; font-size: 14px; color: #1a1a2e; flex: 1; background: transparent; }
+  .search-box input::placeholder { color: #94a3b8; }
+  .welcome-banner .search-box { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); box-shadow: none; max-width: 480px; }
+  .welcome-banner .search-box svg { color: rgba(255,255,255,0.5); }
+  .welcome-banner .search-box input { color: #fff; }
+  .welcome-banner .search-box input::placeholder { color: rgba(255,255,255,0.5); }
+
+  /* Action Cards */
+  .action-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
+  .action-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px 20px; cursor: pointer; transition: box-shadow 0.2s, border-color 0.2s; position: relative; }
+  .action-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-color: #14B8A6; }
+  .action-card .icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; font-size: 20px; }
+  .action-card .icon.red { background: #fef2f2; color: #ef4444; }
+  .action-card .icon.teal { background: #f0fdfa; color: #14B8A6; }
+  .action-card .icon.gray { background: #f1f5f9; color: #64748b; }
+  .action-card h3 { font-size: 15px; font-weight: 600; color: #0B1F33; }
+  .action-card p { font-size: 12px; color: #64748b; margin-top: 4px; }
+  .badge { position: absolute; top: 16px; right: 16px; background: #ef4444; color: #fff; font-size: 11px; font-weight: 700; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; }
+
+  /* Announcements Section */
+  .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .section-header h3 { font-size: 16px; font-weight: 600; color: #0B1F33; }
+  .view-all { font-size: 13px; color: #14B8A6; font-weight: 600; cursor: pointer; text-decoration: none; }
+  .view-all:hover { text-decoration: underline; }
+
+  .announcement-item { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px 20px; margin-bottom: 10px; display: flex; align-items: flex-start; gap: 12px; }
+  .tag { padding: 3px 10px; border-radius: 4px; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
+  .tag.high { background: #fef2f2; color: #ef4444; }
+  .tag.update { background: #f0fdfa; color: #14B8A6; }
+  .tag.info { background: #eff6ff; color: #3b82f6; }
+  .announcement-item .text h4 { font-size: 14px; font-weight: 600; color: #0B1F33; }
+  .announcement-item .text .meta { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+
+  /* Onboarding Checklist */
+  .checklist-box { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px 24px; margin-top: 24px; }
+  .checklist-box h3 { font-size: 16px; font-weight: 600; color: #0B1F33; margin-bottom: 12px; }
+  .progress-info { font-size: 13px; color: #64748b; margin-bottom: 8px; }
+  .progress-bar { height: 8px; background: #e2e8f0; border-radius: 4px; margin-bottom: 16px; overflow: hidden; }
+  .progress-bar .fill { height: 100%; background: #14B8A6; border-radius: 4px; transition: width 0.3s; }
+  .checklist-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid #f1f5f9; font-size: 13px; }
+  .checklist-item:first-of-type { border-top: none; }
+  .check { width: 22px; height: 22px; border-radius: 6px; border: 2px solid #e2e8f0; display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; transition: all 0.2s; }
+  .check.done { background: #14B8A6; border-color: #14B8A6; }
+  .check.done svg { display: block; }
+  .check svg { display: none; width: 14px; height: 14px; color: #fff; }
+  .checklist-item.done .label { color: #94a3b8; text-decoration: line-through; }
+
+  /* ── Artifact Library ── */
+  .lib-header { margin-bottom: 20px; }
+  .lib-header h2 { font-size: 22px; font-weight: 700; color: #0B1F33; }
+  .lib-header p { font-size: 14px; color: #64748b; margin-top: 4px; }
+  .lib-search { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .lib-search .search-box { flex: 1; max-width: 600px; margin-top: 0; }
+  .lib-search .count { font-size: 13px; color: #94a3b8; }
+  .filter-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+  .filter-row .filter-label { font-size: 12px; font-weight: 600; color: #64748b; letter-spacing: 0.5px; text-transform: uppercase; min-width: 80px; }
+  .filter-pill { padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; border: 1px solid #e2e8f0; background: #fff; color: #64748b; cursor: pointer; transition: all 0.15s; }
+  .filter-pill:hover { border-color: #14B8A6; color: #14B8A6; }
+  .filter-pill.active { background: #14B8A6; color: #fff; border-color: #14B8A6; }
+
+  .artifact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 20px; }
+  .artifact-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; cursor: pointer; transition: box-shadow 0.2s; }
+  .artifact-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+  .artifact-thumb { height: 140px; background: #0B1F33; display: flex; align-items: center; justify-content: center; position: relative; }
+  .artifact-thumb.guide { background: #f8fafc; }
+  .artifact-thumb .cat-label { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.6); color: #fff; font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 4px; letter-spacing: 0.5px; }
+  .artifact-thumb .duration { position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); color: #fff; font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 4px; }
+  .play-btn { width: 48px; height: 48px; border-radius: 50%; background: #14B8A6; display: flex; align-items: center; justify-content: center; }
+  .play-btn svg { width: 20px; height: 20px; color: #fff; margin-left: 2px; }
+  .artifact-thumb .guide-icon { width: 48px; height: 48px; color: #14B8A6; }
+  .artifact-thumb .guide-icon svg { width: 48px; height: 48px; }
+  .artifact-body { padding: 14px 16px; }
+  .artifact-body .module-tag { display: inline-block; font-size: 10px; font-weight: 600; color: #14B8A6; background: #f0fdfa; padding: 2px 8px; border-radius: 4px; margin-bottom: 6px; }
+  .artifact-body h4 { font-size: 14px; font-weight: 600; color: #0B1F33; line-height: 1.3; }
+  .artifact-body p { font-size: 12px; color: #64748b; margin-top: 4px; line-height: 1.4; }
+  .artifact-footer { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; border-top: 1px solid #f1f5f9; }
+  .artifact-footer .tags { display: flex; gap: 6px; }
+  .artifact-footer .tags span { font-size: 11px; color: #94a3b8; background: #f8fafc; padding: 2px 8px; border-radius: 4px; }
+  .artifact-footer .date { font-size: 11px; color: #94a3b8; }
+
+  /* ── Support Tickets ── */
+  .tickets-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .tickets-header h2 { font-size: 22px; font-weight: 700; color: #0B1F33; }
+  .btn-primary { padding: 10px 20px; background: #14B8A6; color: #fff; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+  .btn-primary:hover { background: #0d9488; }
+
+  .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+  .stat-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px 20px; }
+  .stat-card .stat-label { font-size: 11px; font-weight: 600; color: #94a3b8; letter-spacing: 0.5px; text-transform: uppercase; }
+  .stat-card .stat-value { font-size: 32px; font-weight: 700; color: #14B8A6; margin-top: 4px; }
+
+  .tickets-table { width: 100%; background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden; border-spacing: 0; }
+  .tickets-table th { text-align: left; padding: 12px 16px; font-size: 12px; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #e2e8f0; background: #f8fafc; }
+  .tickets-table td { padding: 14px 16px; font-size: 13px; border-bottom: 1px solid #f1f5f9; }
+  .tickets-table tr:last-child td { border-bottom: none; }
+  .tickets-table .id { color: #14B8A6; font-weight: 600; }
+  .status-badge { padding: 3px 10px; border-radius: 4px; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; }
+  .status-badge.open { background: #f0fdfa; color: #14B8A6; }
+  .status-badge.pending { background: #fff7ed; color: #f59e0b; }
+  .status-badge.resolved { background: #f0fdfa; color: #14B8A6; }
+
+  /* ── Announcements Tab ── */
+  .announce-header { margin-bottom: 20px; }
+  .announce-header h2 { font-size: 22px; font-weight: 700; color: #0B1F33; }
+  .announce-header p { font-size: 14px; color: #64748b; margin-top: 4px; }
+
+  /* ── Events Tab ── */
+  .events-header { margin-bottom: 24px; }
+  .events-header h2 { font-size: 22px; font-weight: 700; color: #0B1F33; }
+  .events-header p { font-size: 14px; color: #64748b; margin-top: 4px; }
+  .events-section { margin-bottom: 28px; }
+  .events-section h3 { font-size: 16px; font-weight: 600; color: #0B1F33; margin-bottom: 14px; }
+
+  .event-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px 20px; margin-bottom: 10px; display: flex; align-items: center; gap: 16px; }
+  .event-date { text-align: center; min-width: 50px; }
+  .event-date .month { font-size: 11px; font-weight: 700; color: #14B8A6; text-transform: uppercase; }
+  .event-date .day { font-size: 24px; font-weight: 700; color: #0B1F33; line-height: 1; }
+  .event-date .closes { font-size: 10px; font-weight: 700; color: #ef4444; text-transform: uppercase; }
+  .event-info { flex: 1; }
+  .event-info h4 { font-size: 14px; font-weight: 600; color: #0B1F33; }
+  .event-info .meta { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+  .event-info .event-tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-top: 4px; }
+  .event-tag.webinar { background: #f0fdfa; color: #14B8A6; }
+  .event-tag.survey { background: #fff7ed; color: #f59e0b; }
+  .event-tag.event { background: #eff6ff; color: #3b82f6; }
+  .btn-outline { padding: 8px 18px; border: 1px solid #14B8A6; background: #fff; color: #14B8A6; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+  .btn-outline:hover { background: #14B8A6; color: #fff; }
+  .btn-teal { padding: 8px 18px; background: #14B8A6; color: #fff; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+  .btn-teal:hover { background: #0d9488; }
+
+  /* ── Footer ── */
+  .footer { background: #0B1F33; color: #fff; padding: 12px 24px; display: flex; align-items: center; gap: 12px; font-size: 13px; font-weight: 500; }
+  .footer .footer-logo { width: 32px; height: 32px; background: #162a40; border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+  .footer .footer-text { display: flex; flex-direction: column; }
+  .footer .footer-text .brand { font-size: 12px; font-weight: 700; letter-spacing: 0.5px; }
+  .footer .footer-text .sub { font-size: 11px; color: #94a3b8; font-weight: 600; }
+  .footer .status-dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; margin-left: auto; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#14B8A6" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 12h6M12 9v6"/></svg>
+      </div>
+      <h1>Mareto</h1>
+      <span class="powered">Powered by HelpSeeker Technologies</span>
+    </div>
+    <div class="avatar">NC</div>
+  </div>
+
+  <div class="body-wrap">
+    <!-- Main Content -->
+    <div class="main">
+      <!-- Tabs -->
+      <div class="tabs">
+        <div class="tab active" data-tab="home">HQ Home</div>
+        <div class="tab" data-tab="library">Artifact Library</div>
+        <div class="tab" data-tab="tickets">Support Tickets</div>
+        <div class="tab" data-tab="announcements">Announcements</div>
+        <div class="tab" data-tab="events">HelpSeeker Events</div>
+      </div>
+
+      <!-- ═══ HQ HOME ═══ -->
+      <div class="tab-content active" id="tab-home">
+        <div class="welcome-banner">
+          <div class="greeting">Good morning, <strong>Nicole Croft (HelpSeeker)</strong>! Welcome to your Help Centre.</div>
+          <div class="date">Tuesday &middot; February 24, 2026 at 11:50 AM</div>
+          <h2>Mareto HQ</h2>
+          <div class="subtitle">Find guides, submit support tickets, and stay up to date &mdash; all without leaving Mareto.</div>
+          <div class="search-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" placeholder="Search guides, videos, announcements...">
+          </div>
+        </div>
+
+        <div class="action-cards">
+          <div class="action-card">
+            <div class="icon red"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4l-10 8L2 4"/></svg></div>
+            <h3>Submit a Ticket</h3>
+            <p>Report an issue or request help from our team</p>
+          </div>
+          <div class="action-card">
+            <div class="icon teal"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
+            <h3>Artifact Library</h3>
+            <p>Videos, reference guides, and FAQs all in one place</p>
+            <div class="badge">22</div>
+          </div>
+          <div class="action-card">
+            <div class="icon gray"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg></div>
+            <h3>Announcements</h3>
+            <p>Latest news, release notes, and system updates</p>
+          </div>
+        </div>
+
+        <div class="section-header">
+          <h3>Latest Announcements</h3>
+          <a class="view-all" href="#">View all &rarr;</a>
+        </div>
+        <div class="announcement-item">
+          <span class="tag high">HIGH</span>
+          <div class="text">
+            <h4>Teams now live in Mareto! No more FRFs &mdash; all requests through the database.</h4>
+            <div class="meta">February 18, 2026 &middot; Contact Ashley K. with questions</div>
+          </div>
+        </div>
+        <div class="announcement-item">
+          <span class="tag update">UPDATE</span>
+          <div class="text">
+            <h4>Mareto v3.2 Release: New reporting filters and bulk export improvements</h4>
+            <div class="meta">February 10, 2026</div>
+          </div>
+        </div>
+
+        <div class="checklist-box">
+          <h3>Onboarding Checklist</h3>
+          <div class="progress-info">3 of 6 complete</div>
+          <div class="progress-bar"><div class="fill" style="width:50%"></div></div>
+          <div class="checklist-item done" onclick="toggleCheck(this)">
+            <div class="check done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <span class="label">Complete Mareto login and password setup</span>
+          </div>
+          <div class="checklist-item done" onclick="toggleCheck(this)">
+            <div class="check done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <span class="label">Watch the Getting Started video tutorial</span>
+          </div>
+          <div class="checklist-item done" onclick="toggleCheck(this)">
+            <div class="check done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <span class="label">Create your first Person Registration</span>
+          </div>
+          <div class="checklist-item" onclick="toggleCheck(this)">
+            <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <span class="label">Review team role assignments with your admin</span>
+          </div>
+          <div class="checklist-item" onclick="toggleCheck(this)">
+            <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <span class="label">Review the Mareto Glossary of Terms</span>
+          </div>
+          <div class="checklist-item" onclick="toggleCheck(this)">
+            <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <span class="label">Submit a test support ticket</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ ARTIFACT LIBRARY ═══ -->
+      <div class="tab-content" id="tab-library">
+        <div class="lib-header">
+          <h2>Artifact Library</h2>
+          <p>Videos, guides, and FAQs &mdash; search or filter to find what you need.</p>
+        </div>
+        <div class="lib-search">
+          <div class="search-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" placeholder="Search guides, videos, topics...">
+          </div>
+          <span class="count">Showing 24 of 24</span>
+        </div>
+        <div class="filter-row">
+          <span class="filter-label">Category:</span>
+          <span class="filter-pill active" onclick="filterCat(this)">All</span>
+          <span class="filter-pill" onclick="filterCat(this)">Universal</span>
+          <span class="filter-pill" onclick="filterCat(this)">Person Registry</span>
+          <span class="filter-pill" onclick="filterCat(this)">Intake</span>
+          <span class="filter-pill" onclick="filterCat(this)">Case Mgmt</span>
+          <span class="filter-pill" onclick="filterCat(this)">Events</span>
+          <span class="filter-pill" onclick="filterCat(this)">Finance</span>
+          <span class="filter-pill" onclick="filterCat(this)">Housing</span>
+          <span class="filter-pill" onclick="filterCat(this)">Good Food Box</span>
+          <span class="filter-pill" onclick="filterCat(this)">Maintenance</span>
+        </div>
+        <div class="filter-row">
+          <span class="filter-label">Type:</span>
+          <span class="filter-pill active" onclick="filterType(this)">All</span>
+          <span class="filter-pill" onclick="filterType(this)">Videos</span>
+          <span class="filter-pill" onclick="filterType(this)">Guides</span>
+          <span class="filter-pill" onclick="filterType(this)">FAQ</span>
+        </div>
+
+        <div class="artifact-grid">
+          <!-- Card 1: Guide -->
+          <div class="artifact-card">
+            <div class="artifact-thumb guide">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#14B8A6" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <div class="artifact-body">
+              <span class="module-tag">Universal</span>
+              <h4>Getting Around Mareto: Navigation & Sidebar</h4>
+              <p>How to use the sidebar, expand modules, and find your way around the platform.</p>
+            </div>
+            <div class="artifact-footer">
+              <div class="tags"><span>Navigation</span><span>Getting Started</span></div>
+              <span class="date">Feb 2026</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Video -->
+          <div class="artifact-card">
+            <div class="artifact-thumb">
+              <div class="cat-label">NAVIGATION</div>
+              <div class="play-btn"><svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+              <span class="duration">2:15</span>
+            </div>
+            <div class="artifact-body">
+              <span class="module-tag">Universal</span>
+              <h4>How to Navigate Mareto</h4>
+              <p>A 2-minute walkthrough of the sidebar, home dashboard, and how to find any module.</p>
+            </div>
+            <div class="artifact-footer">
+              <div class="tags"><span>Navigation</span><span>Getting Started</span></div>
+              <span class="date">Feb 2026</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Guide -->
+          <div class="artifact-card">
+            <div class="artifact-thumb guide">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#14B8A6" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <div class="artifact-body">
+              <span class="module-tag">Universal</span>
+              <h4>Searching for a Person Record</h4>
+              <p>How to search by name or DOB, toggle Active/Inactive, and avoid creating duplicates.</p>
+            </div>
+            <div class="artifact-footer">
+              <div class="tags"><span>Person Registry</span><span>Search</span></div>
+              <span class="date">Feb 2026</span>
+            </div>
+          </div>
+
+          <!-- Card 4: Video -->
+          <div class="artifact-card">
+            <div class="artifact-thumb">
+              <div class="cat-label">PERSON REGISTRY</div>
+              <div class="play-btn"><svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+              <span class="duration">4:32</span>
+            </div>
+            <div class="artifact-body">
+              <span class="module-tag">Universal</span>
+              <h4>Creating a New Person Registration</h4>
+              <p>Step-by-step video on creating records, required fields, and common mistakes to avoid.</p>
+            </div>
+            <div class="artifact-footer">
+              <div class="tags"><span>Person Registry</span><span>Data Entry</span></div>
+              <span class="date">Feb 2026</span>
+            </div>
+          </div>
+
+          <!-- Card 5: Guide -->
+          <div class="artifact-card">
+            <div class="artifact-thumb guide">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#14B8A6" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <div class="artifact-body">
+              <span class="module-tag">Universal</span>
+              <h4>Filtering, Sorting, and Searching Any Record List</h4>
+              <p>How to use column filters, sort headers, search bars, and tabs across all modules.</p>
+            </div>
+            <div class="artifact-footer">
+              <div class="tags"><span>Universal</span><span>Filters</span></div>
+              <span class="date">Feb 2026</span>
+            </div>
+          </div>
+
+          <!-- Card 6: Guide -->
+          <div class="artifact-card">
+            <div class="artifact-thumb guide">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#14B8A6" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <div class="artifact-body">
+              <span class="module-tag">Universal</span>
+              <h4>Submitting a Support Ticket</h4>
+              <p>How to report issues, what information to include, and how to track your ticket.</p>
+            </div>
+            <div class="artifact-footer">
+              <div class="tags"><span>Support</span><span>Getting Started</span></div>
+              <span class="date">Feb 2026</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ SUPPORT TICKETS ═══ -->
+      <div class="tab-content" id="tab-tickets">
+        <div class="tickets-header">
+          <h2>Support Tickets</h2>
+          <button class="btn-primary">+ New Ticket</button>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-label">Open</div>
+            <div class="stat-value">2</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Pending</div>
+            <div class="stat-value" style="color:#f59e0b;">1</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Resolved (30D)</div>
+            <div class="stat-value" style="color:#0B1F33;">8</div>
+          </div>
+        </div>
+
+        <table class="tickets-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Subject</th>
+              <th>Status</th>
+              <th>Priority</th>
+              <th>Created</th>
+              <th>Updated</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="id">#1042</td>
+              <td>GFB Order List not filtering by date range</td>
+              <td><span class="status-badge open">OPEN</span></td>
+              <td>High</td>
+              <td>Feb 22</td>
+              <td>Feb 23</td>
+            </tr>
+            <tr>
+              <td class="id">#1041</td>
+              <td>Person record export missing Legal Gender column</td>
+              <td><span class="status-badge open">OPEN</span></td>
+              <td>Medium</td>
+              <td>Feb 20</td>
+              <td>Feb 21</td>
+            </tr>
+            <tr>
+              <td class="id">#1038</td>
+              <td>Need help setting up new Maintenance team role</td>
+              <td><span class="status-badge pending">PENDING</span></td>
+              <td>Low</td>
+              <td>Feb 15</td>
+              <td>Feb 19</td>
+            </tr>
+            <tr>
+              <td class="id">#1035</td>
+              <td>Housing module: attachment preview sizing issue</td>
+              <td><span class="status-badge resolved">RESOLVED</span></td>
+              <td>Medium</td>
+              <td>Feb 10</td>
+              <td>Feb 14</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ═══ ANNOUNCEMENTS ═══ -->
+      <div class="tab-content" id="tab-announcements">
+        <div class="announce-header">
+          <h2>Announcements & What's New</h2>
+          <p>Release notes, system updates, and important notices from HelpSeeker.</p>
+        </div>
+
+        <div class="announcement-item">
+          <span class="tag high">HIGH</span>
+          <div class="text">
+            <h4>Teams now live in Mareto! No more FRFs &mdash; all requests through the database.</h4>
+            <div class="meta">February 18, 2026 &middot; Contact Ashley K. with questions</div>
+          </div>
+        </div>
+        <div class="announcement-item">
+          <span class="tag update">UPDATE</span>
+          <div class="text">
+            <h4>Mareto v3.2 Release: New reporting filters and bulk export improvements</h4>
+            <div class="meta">February 10, 2026</div>
+          </div>
+        </div>
+        <div class="announcement-item">
+          <span class="tag info">INFO</span>
+          <div class="text">
+            <h4>Scheduled maintenance window: Saturday Feb 22, 10pm&ndash;2am MST</h4>
+            <div class="meta">February 8, 2026</div>
+          </div>
+        </div>
+        <div class="announcement-item">
+          <span class="tag update">UPDATE</span>
+          <div class="text">
+            <h4>Good Food Box recurring orders now support delivery scheduling</h4>
+            <div class="meta">January 28, 2026</div>
+          </div>
+        </div>
+        <div class="announcement-item">
+          <span class="tag info">INFO</span>
+          <div class="text">
+            <h4>New Help Centre launched! Access guides, videos, and support all from Mareto HQ.</h4>
+            <div class="meta">January 20, 2026</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ HELPSEEKER EVENTS ═══ -->
+      <div class="tab-content" id="tab-events">
+        <div class="events-header">
+          <h2>HelpSeeker Events</h2>
+          <p>Upcoming webinars, surveys, and community events from HelpSeeker Technologies.</p>
+        </div>
+
+        <div class="events-section">
+          <h3>Upcoming Webinars</h3>
+          <div class="event-card">
+            <div class="event-date"><div class="month">MAR</div><div class="day">06</div></div>
+            <div class="event-info">
+              <h4>Mareto Reporting Deep Dive: Custom Filters & Exports</h4>
+              <div class="meta">Thursday, 1:00 PM MST &middot; 45 min</div>
+              <span class="event-tag webinar">WEBINAR</span>
+            </div>
+            <button class="btn-teal">Register</button>
+          </div>
+          <div class="event-card">
+            <div class="event-date"><div class="month">MAR</div><div class="day">20</div></div>
+            <div class="event-info">
+              <h4>New Feature Walkthrough: Case Timeline & Event Linking</h4>
+              <div class="meta">Thursday, 2:00 PM MST &middot; 30 min</div>
+              <span class="event-tag webinar">WEBINAR</span>
+            </div>
+            <button class="btn-teal">Register</button>
+          </div>
+          <div class="event-card">
+            <div class="event-date"><div class="month">APR</div><div class="day">03</div></div>
+            <div class="event-info">
+              <h4>Mareto Office Hours: Q&A with the Product Team</h4>
+              <div class="meta">Thursday, 12:00 PM MST &middot; 60 min</div>
+              <span class="event-tag webinar">WEBINAR</span>
+            </div>
+            <button class="btn-teal">Register</button>
+          </div>
+        </div>
+
+        <div class="events-section">
+          <h3>Open Surveys</h3>
+          <div class="event-card">
+            <div class="event-date"><div class="closes">CLOSES</div><div class="day">28</div></div>
+            <div class="event-info">
+              <h4>2026 Client Satisfaction Survey</h4>
+              <div class="meta">Takes ~5 min &middot; Your feedback shapes our roadmap</div>
+              <span class="event-tag survey">SURVEY</span>
+            </div>
+            <button class="btn-teal">Take Survey</button>
+          </div>
+          <div class="event-card">
+            <div class="event-date"><div class="closes">CLOSES</div><div class="day">15</div></div>
+            <div class="event-info">
+              <h4>Help Centre Content Feedback: What guides do you need?</h4>
+              <div class="meta">Takes ~3 min</div>
+              <span class="event-tag survey">SURVEY</span>
+            </div>
+            <button class="btn-teal">Take Survey</button>
+          </div>
+        </div>
+
+        <div class="events-section">
+          <h3>Community</h3>
+          <div class="event-card">
+            <div class="event-date"><div class="month">MAR</div><div class="day">12</div></div>
+            <div class="event-info">
+              <h4>Mareto User Group Meetup &mdash; Calgary Chapter</h4>
+              <div class="meta">Wednesday, 4:00 PM MST &middot; In-person + virtual</div>
+              <span class="event-tag event">EVENT</span>
+            </div>
+            <button class="btn-teal">RSVP</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-logo">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#14B8A6" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 12h6M12 9v6"/></svg>
+    </div>
+    <div class="footer-text">
+      <span class="brand">MARETO HQ</span>
+      <span class="sub">Help Centre</span>
+    </div>
+    <div class="status-dot"></div>
+  </div>
+
+</div>
+
+<script>
+  // Tab switching
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Filter pills
+  function filterCat(el) {
+    el.parentElement.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+  }
+  function filterType(el) {
+    el.parentElement.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  // Checklist toggle
+  function toggleCheck(item) {
+    item.classList.toggle('done');
+    const check = item.querySelector('.check');
+    check.classList.toggle('done');
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const items = document.querySelectorAll('.checklist-item');
+    const done = document.querySelectorAll('.checklist-item.done').length;
+    const total = items.length;
+    document.querySelector('.progress-info').textContent = `${done} of ${total} complete`;
+    document.querySelector('.progress-bar .fill').style.width = `${(done / total) * 100}%`;
+  }
+</script>
+</body>
+</html>
