@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ — Operations &amp; Collaboration | Mareto</title>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0B1F33;--teal:#0FB9B1;--slate:#1E3A5F;--aqua:#4FD1C5;--white:#FFFFFF;--light-grey:#F5F7FA;--mid-grey:#E2E8F0;--cover-label:#7EB8C9;--callout-bg:#E6F7F7;--body-black:#000000;--caption:#4A5568}*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Lato',Arial,sans-serif;font-size:10pt;color:var(--body-black);background:#e8e8e8;line-height:1.6}.page{max-width:870px;margin:0 auto;background:var(--white);box-shadow:0 0 30px rgba(0,0,0,0.18)}.cover{background:var(--navy)}.cover-header{padding:22px 30px 16px;display:flex;align-items:center;justify-content:space-between}.cover-header-label{color:var(--cover-label);font-size:8pt;font-weight:400;letter-spacing:0.05em}.cover-body{padding:52px 30px 60px;display:flex;flex-direction:column;gap:10px}.cover-title{color:var(--white);font-size:32pt;font-weight:400;line-height:1.1}.cover-subtitle{color:var(--aqua);font-size:16pt;font-weight:400}.cover-meta{color:var(--cover-label);font-size:9pt;margin-top:8px}.content{padding:44px 52px 52px}.section-intro{margin-bottom:32px}.section-intro h1{font-size:16pt;font-weight:400;color:var(--body-black);margin-bottom:8px}.section-intro p{font-size:10.5pt;color:var(--caption);line-height:1.6}.tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}.cat-tag{display:inline-block;padding:4px 12px;border-radius:20px;font-size:9pt;font-weight:700;letter-spacing:0.3px;background:var(--callout-bg);color:var(--teal);border:1px solid rgba(15,185,177,0.25)}.faq-card{background:var(--white);border:1px solid var(--mid-grey);border-radius:8px;margin-bottom:16px;overflow:hidden;transition:box-shadow 0.2s}.faq-card:hover{box-shadow:0 2px 10px rgba(0,0,0,0.06)}.faq-question{display:flex;align-items:flex-start;gap:14px;padding:18px 22px;cursor:pointer;user-select:none}.faq-question .q-icon{flex-shrink:0;width:28px;height:28px;background:var(--navy);color:var(--aqua);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;margin-top:1px}.faq-question .q-text{font-size:11pt;font-weight:700;color:var(--slate);line-height:1.4;flex:1}.faq-question .chevron{flex-shrink:0;width:20px;height:20px;color:#94a3b8;transition:transform 0.25s;margin-top:4px}.faq-card.open .faq-question .chevron{transform:rotate(180deg)}.faq-answer{display:none;padding:0 22px 20px 64px;font-size:10.5pt;color:var(--body-black);line-height:1.65}.faq-card.open .faq-answer{display:block}.faq-answer p{margin-bottom:8px}.faq-answer p:last-child{margin-bottom:0}.callout{display:flex;margin:12px 0;border-radius:0 4px 4px 0;overflow:hidden}.callout-stripe{width:5px;background:var(--teal);flex-shrink:0}.callout-body{background:var(--callout-bg);padding:10px 14px;flex:1;font-size:10pt}.callout-body strong{color:var(--navy);font-weight:700}.footer{background:var(--navy);padding:20px 30px;display:flex;align-items:center;gap:14px}.footer-text{display:flex;flex-direction:column}.footer-brand{color:var(--white);font-size:10pt;font-weight:700;letter-spacing:0.3px}.footer-sub{color:var(--cover-label);font-size:8.5pt;font-weight:400}@media print{body{background:white}.page{box-shadow:none;max-width:100%}.faq-answer{display:block!important}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="cover">
+    <div class="cover-header"><span class="cover-header-label">MARETO HQ &middot; FAQ</span></div>
+    <div class="cover-body">
+      <div class="cover-title">Operations &amp; Collaboration</div>
+      <div class="cover-subtitle">Frequently Asked Questions</div>
+      <div class="cover-meta">Last updated &middot; April 2, 2026</div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="section-intro">
+      <h1>Operations &amp; Collaboration</h1>
+      <p>Common questions about occupancy tracking, internal team communication, and operational tools in Mareto.</p>
+    </div>
+    <div class="tag-row">
+      <span class="cat-tag">Occupancy</span>
+      <span class="cat-tag">Bed Management</span>
+      <span class="cat-tag">Comments</span>
+      <span class="cat-tag">Team Communication</span>
+    </div>
+
+    <div class="faq-card open">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <div class="q-icon">Q</div>
+        <div class="q-text">How do I check available beds or units?</div>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="faq-answer">
+        <p>The Occupancy and Inventory module provides live tracking. Availability updates automatically as files open and close. You can view nights in service, bed types, and breakdowns by funding requirements &mdash; all in real time.</p>
+      </div>
+    </div>
+
+    <div class="faq-card">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <div class="q-icon">Q</div>
+        <div class="q-text">How do I communicate with other staff about a client without leaving Mareto?</div>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="faq-answer">
+        <p>Use the Comments System. Comments can be attached to person records and case files, and are visible to relevant staff (or scoped by program). It works as a real-time internal communication channel so your team can coordinate without switching to email or messaging apps.</p>
+        <div class="callout">
+          <div class="callout-stripe"></div>
+          <div class="callout-body"><strong>Note:</strong> Comments are internal only &mdash; clients do not see them. They are designed for team coordination, not client-facing communication.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-card">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <div class="q-icon">Q</div>
+        <div class="q-text">Can I track inventory beyond beds (e.g., rooms or housing units)?</div>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="faq-answer">
+        <p>Yes. The Occupancy and Inventory module is flexible &mdash; it can track rooms, beds, units, or any other resource your organization manages. Availability is tied to case status, so when a file closes the unit is automatically freed up. Tracking can be separated by bed type and funding requirements.</p>
+      </div>
+    </div>
+
+  </div>
+  <div class="footer">
+    <div class="footer-text">
+      <span class="footer-brand">Powered by HelpSeeker Technologies</span>
+      <span class="footer-sub">mareto.ca</span>
+    </div>
+  </div>
+</div>
+<script>function toggleFaq(el){el.closest('.faq-card').classList.toggle('open')}</script>
+</body>
+</html>
