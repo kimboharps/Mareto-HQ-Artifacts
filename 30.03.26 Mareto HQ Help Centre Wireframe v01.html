@@ -304,30 +304,32 @@
           </div>
           <span class="count">Showing 8 of 8</span>
         </div>
-        <div class="filter-row">
+        <div class="filter-row" id="category-filters">
           <span class="filter-label">Category:</span>
-          <span class="filter-pill active" onclick="filterCat(this)">All</span>
-          <span class="filter-pill" onclick="filterCat(this)">Universal</span>
-          <span class="filter-pill" onclick="filterCat(this)">Person Registry</span>
-          <span class="filter-pill" onclick="filterCat(this)">Intake</span>
-          <span class="filter-pill" onclick="filterCat(this)">Case Mgmt</span>
-          <span class="filter-pill" onclick="filterCat(this)">Events</span>
-          <span class="filter-pill" onclick="filterCat(this)">Finance</span>
-          <span class="filter-pill" onclick="filterCat(this)">Housing</span>
-          <span class="filter-pill" onclick="filterCat(this)">Good Food Box</span>
-          <span class="filter-pill" onclick="filterCat(this)">Maintenance</span>
+          <span class="filter-pill active" data-filter="all">All</span>
+          <span class="filter-pill" data-filter="universal">Universal</span>
+          <span class="filter-pill" data-filter="navigation">Navigation</span>
+          <span class="filter-pill" data-filter="person-registry">Person Registry</span>
+          <span class="filter-pill" data-filter="forms">Forms</span>
+          <span class="filter-pill" data-filter="intake">Intake</span>
+          <span class="filter-pill" data-filter="case-mgmt">Case Mgmt</span>
+          <span class="filter-pill" data-filter="reporting">Reporting</span>
+          <span class="filter-pill" data-filter="events">Events</span>
+          <span class="filter-pill" data-filter="finance">Finance</span>
+          <span class="filter-pill" data-filter="housing">Housing</span>
+          <span class="filter-pill" data-filter="maintenance">Maintenance</span>
         </div>
-        <div class="filter-row">
+        <div class="filter-row" id="type-filters">
           <span class="filter-label">Type:</span>
-          <span class="filter-pill active" onclick="filterType(this)">All</span>
-          <span class="filter-pill" onclick="filterType(this)">Videos</span>
-          <span class="filter-pill" onclick="filterType(this)">Guides</span>
-          <span class="filter-pill" onclick="filterType(this)">FAQ</span>
+          <span class="filter-pill active" data-filter="all">All</span>
+          <span class="filter-pill" data-filter="video">Videos</span>
+          <span class="filter-pill" data-filter="guide">Guides</span>
+          <span class="filter-pill" data-filter="faq">FAQ</span>
         </div>
 
         <div class="artifact-grid">
           <!-- Guide: Glossary of Terms -->
-          <a class="artifact-card" href="https://kimboharps.github.io/Mareto-HQ-Artifacts/guides/31.03.26%20Mareto%20Glossary%20of%20Terms%20v01.html" target="_blank" style="text-decoration:none;color:inherit;">
+          <a class="artifact-card" data-category="universal" data-type="guide" href="https://kimboharps.github.io/Mareto-HQ-Artifacts/guides/31.03.26%20Mareto%20Glossary%20of%20Terms%20v01.html" target="_blank" style="text-decoration:none;color:inherit;">
             <div class="artifact-thumb guide">
               <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#14B8A6" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
             </div>
@@ -344,7 +346,7 @@
 
           
           <!-- Guide: Navigation and Sidebar Guide -->
-          <a class="artifact-card" href="https://kimboharps.github.io/Mareto-HQ-Artifacts/guides/10.03.26%20Navigation%20and%20Sidebar%20Guide%20v01.html" target="_blank" style="text-decoration:none;color:inherit;">
+          <a class="artifact-card" data-category="navigation" data-type="guide" href="https://kimboharps.github.io/Mareto-HQ-Artifacts/guides/10.03.26%20Navigation%20and%20Sidebar%20Guide%20v01.html" target="_blank" style="text-decoration:none;color:inherit;">
             <div class="artifact-thumb guide">
               <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#14B8A6" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
             </div>
@@ -360,7 +362,7 @@
           </a>
 
           <!-- Guide: Mareto Navigation Guide -->
-          <a class="artifact-card" href="https://kimboharps.github.io/Mareto-HQ-Artifacts/guides/Mareto_Navigation_Guide.html" target="_blank" style="text-decoration:none;color:inherit;">
+          <a class="artifact-card" data-category="navigation" data-type="guide" href="https://kimboharps.github.io/Mareto-HQ-Artifacts/guides/Mareto_Navigation_Guide.html" target="_blank" style="text-decoration:none;color:inherit;">
             <div class="artifact-thumb guide">
               <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#14B8A6" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
             </div>
@@ -376,7 +378,7 @@
           </a>
 
           <!-- Video: How to Navigate Mareto -->
-          <a class="artifact-card" href="https://kimboharps.github.io/Mareto-HQ-Artifacts/videos/how-to-navigate-mareto.html" target="_blank" style="text-decoration:none;color:inherit;">
+          <a class="artifact-card" data-category="navigation" data-type="video" href="https://kimboharps.github.io/Mareto-HQ-Artifacts/videos/how-to-navigate-mareto.html" target="_blank" style="text-decoration:none;color:inherit;">
             <div class="artifact-thumb">
               <div class="cat-label">NAVIGATION</div>
               <div class="play-btn"><svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
@@ -394,7 +396,7 @@
           </a>
 
           <!-- Guide: The Person Module -->
-          <a class="artifact-card" href="https://kimboharps.github.io/Mareto-HQ-Artifacts/guides/11.03.26%20The%20Person%20Module%20v01.html" target="_blank" style="text-decoration:none;color:inherit;">
+          <a class="artifact-card" data-category="person-registry" data-type="guide" href="https://kimboharps.github.io/Mareto-HQ-Artifacts/guides/11.03.26%20The%20Person%20Module%20v01.html" target="_blank" style="text-decoration:none;color:inherit;">
             <div class="artifact-thumb guide">
               <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#14B8A6" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
             </div>
@@ -410,7 +412,7 @@
           </a>
 
           <!-- Guide: Finding and Sorting Information Using Filters -->
-          <a class="artifact-card" href="https://kimboharps.github.io/Mareto-HQ-Artifacts/guides/12.03.26%20Finding%20and%20Sorting%20Information%20Using%20Filters%20v02.html" target="_blank" style="text-decoration:none;color:inherit;">
+          <a class="artifact-card" data-category="universal" data-type="guide" href="https://kimboharps.github.io/Mareto-HQ-Artifacts/guides/12.03.26%20Finding%20and%20Sorting%20Information%20Using%20Filters%20v02.html" target="_blank" style="text-decoration:none;color:inherit;">
             <div class="artifact-thumb guide">
               <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#14B8A6" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
             </div>
@@ -426,7 +428,7 @@
           </a>
 
           <!-- Guide: Downloading Case Notes into Excel -->
-          <a class="artifact-card" href="https://kimboharps.github.io/Mareto-HQ-Artifacts/guides/09.03.26%20Downloading%20Case%20Notes%20into%20Excel%20v01.html" target="_blank" style="text-decoration:none;color:inherit;">
+          <a class="artifact-card" data-category="reporting" data-type="guide" href="https://kimboharps.github.io/Mareto-HQ-Artifacts/guides/09.03.26%20Downloading%20Case%20Notes%20into%20Excel%20v01.html" target="_blank" style="text-decoration:none;color:inherit;">
             <div class="artifact-thumb guide">
               <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#14B8A6" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
             </div>
@@ -442,7 +444,7 @@
           </a>
 
           <!-- Guide: How to Add a Section Header to Your Form -->
-          <a class="artifact-card" href="https://kimboharps.github.io/Mareto-HQ-Artifacts/guides/How%20to%20Add%20a%20Section%20Header%20to%20Your%20Form.html" target="_blank" style="text-decoration:none;color:inherit;">
+          <a class="artifact-card" data-category="forms" data-type="guide" href="https://kimboharps.github.io/Mareto-HQ-Artifacts/guides/How%20to%20Add%20a%20Section%20Header%20to%20Your%20Form.html" target="_blank" style="text-decoration:none;color:inherit;">
             <div class="artifact-thumb guide">
               <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#14B8A6" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
             </div>
@@ -719,14 +721,64 @@
     document.getElementById('tab-' + tabName).classList.add('active');
   }
 
-  // Filter pills
-  function filterCat(el) {
-    el.parentElement.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
-    el.classList.add('active');
+  // ── Artifact Library: Filtering & Search ──
+  let activeCategory = 'all';
+  let activeType = 'all';
+  let searchQuery = '';
+
+  // Attach click handlers to filter pills
+  document.querySelectorAll('#category-filters .filter-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('#category-filters .filter-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      activeCategory = pill.dataset.filter;
+      applyFilters();
+    });
+  });
+
+  document.querySelectorAll('#type-filters .filter-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('#type-filters .filter-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      activeType = pill.dataset.filter;
+      applyFilters();
+    });
+  });
+
+  // Search box in library tab
+  const libSearchInput = document.querySelector('#tab-library .search-box input');
+  if (libSearchInput) {
+    libSearchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.toLowerCase().trim();
+      applyFilters();
+    });
   }
-  function filterType(el) {
-    el.parentElement.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
-    el.classList.add('active');
+
+  function applyFilters() {
+    const cards = document.querySelectorAll('.artifact-grid .artifact-card');
+    let visible = 0;
+    const total = cards.length;
+
+    cards.forEach(card => {
+      const cat = card.dataset.category || '';
+      const type = card.dataset.type || '';
+      const text = card.textContent.toLowerCase();
+
+      const matchesCat = activeCategory === 'all' || cat === activeCategory;
+      const matchesType = activeType === 'all' || type === activeType;
+      const matchesSearch = !searchQuery || text.includes(searchQuery);
+
+      if (matchesCat && matchesType && matchesSearch) {
+        card.style.display = '';
+        visible++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    // Update count
+    const countEl = document.querySelector('.lib-search .count');
+    if (countEl) countEl.textContent = `Showing ${visible} of ${total}`;
   }
 
   // Checklist toggle
