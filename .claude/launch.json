@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "mareto-hq",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-c", "import http.server, os; os.chdir('/Users/kimharper/Desktop/Mareto-HQ-Artifacts'); http.server.test(HandlerClass=http.server.SimpleHTTPRequestHandler, port=8090)"],
+      "port": 8090
+    }
+  ]
+}
