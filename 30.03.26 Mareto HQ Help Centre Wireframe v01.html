@@ -184,9 +184,9 @@
   .status-badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; }
   .status-badge.new { background: #DBEAFE; color: #2563EB; }
   .status-badge.open { background: #FEF3C7; color: #D97706; }
-  .status-badge.in-progress { background: #E0E7FF; color: #4F46E5; }
+  .status-badge.in-progress { background: #CCFBF1; color: #0D9488; }
   .status-badge.pending { background: #FEE2E2; color: #DC2626; }
-  .status-badge.resolved { background: #D1FAE5; color: #059669; }
+  .status-badge.resolved { background: #E2E8F0; color: #0B1F33; }
   .status-badge.closed { background: #F3F4F6; color: #6B7280; }
 
   /* Priority badges */
@@ -199,7 +199,7 @@
   /* Type badges */
   .type-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 400; letter-spacing: 0.02em; }
   .type-badge.bug { background: #FEE2E2; color: #DC2626; }
-  .type-badge.feature-request { background: #E0E7FF; color: #4F46E5; }
+  .type-badge.feature-request { background: #CCFBF1; color: #0D9488; }
   .type-badge.support { background: #DBEAFE; color: #2563EB; }
   .type-badge.configuration { background: #F3F4F6; color: #6B7280; }
 
@@ -310,7 +310,7 @@
   .rating-label { font-size: 12px; color: #6B7280; margin-bottom: 16px; }
   .rating-labels { display: flex; justify-content: space-between; font-size: 10px; color: #9CA3AF; margin-top: 2px; width: 152px; }
   .feedback-submitted { background: #D1FAE5; border: 1px solid #A7F3D0; border-radius: 6px; padding: 14px 16px; font-size: 13px; color: #065F46; display: flex; align-items: center; gap: 8px; }
-  .feedback-submitted .material-symbols-outlined { font-size: 18px; color: #059669; }
+  .feedback-submitted .material-symbols-outlined { font-size: 18px; color: #14B8A6; }
 
   /* Attachment upload */
   .attachment-drop { border: 2px dashed var(--border-light); border-radius: 8px; padding: 24px 20px; text-align: center; cursor: pointer; transition: all 0.15s ease; background: var(--white); }
@@ -1473,11 +1473,11 @@
     const types = ['Bug','Feature Request','Support','Configuration'];
     const typeCounts = types.map(t => tickets.filter(tk => tk.type === t).length);
     const maxCount = Math.max(...typeCounts, 1);
-    const typeColors = ['#DC2626','#4F46E5','#2563EB','#6B7280'];
+    const typeColors = ['#DC2626','#14B8A6','#2563EB','#6B7280'];
 
     const statuses = ['New','Open','In Progress','Pending','Resolved','Closed'];
     const statusCounts = statuses.map(s => tickets.filter(t => t.status === s).length);
-    const statusColors = ['#2563EB','#D97706','#4F46E5','#DC2626','#059669','#6B7280'];
+    const statusColors = ['#2563EB','#D97706','#14B8A6','#DC2626','#0B1F33','#6B7280'];
     const total = tickets.length || 1;
 
     let conicStops = [];
