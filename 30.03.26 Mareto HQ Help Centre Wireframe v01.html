@@ -268,6 +268,50 @@
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   .form-hint { font-size: 11px; font-weight: 300; color: #9CA3AF; margin-top: 4px; }
 
+  /* Detail tabs (Conversation / Resolution / Feedback) */
+  .detail-tabs { display: flex; border-bottom: 2px solid var(--border-light); margin-bottom: 0; }
+  .detail-tab { padding: 10px 20px; font-size: 13px; font-weight: 400; color: #6B7280; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.15s ease; }
+  .detail-tab:hover { color: var(--near-black); }
+  .detail-tab.active { color: #14B8A6; border-bottom-color: #14B8A6; font-weight: 700; }
+  .detail-panel { display: none; }
+  .detail-panel.active { display: block; }
+
+  /* Resolution panel */
+  .resolution-panel { background: #fff; border: 1px solid #e2e8f0; border-top: none; border-radius: 0 0 8px 8px; padding: 24px; }
+  .resolution-panel h4 { font-size: 15px; font-weight: 700; color: var(--deep-navy); margin-bottom: 6px; }
+  .resolution-panel .panel-desc { font-size: 13px; color: #6B7280; line-height: 1.55; margin-bottom: 20px; }
+  .resolution-panel .field-label { font-size: 12px; font-weight: 700; color: #14B8A6; margin-bottom: 4px; }
+  .resolution-panel .field-hint { font-size: 11px; font-weight: 300; color: #9CA3AF; margin-bottom: 8px; }
+  .resolution-panel textarea { width: 100%; border: 1px solid var(--border-light); border-radius: 6px; padding: 12px 14px; font-family: 'Lato', sans-serif; font-size: 13px; color: var(--near-black); resize: vertical; min-height: 120px; background: #fff; }
+  .resolution-panel textarea::placeholder { color: #9CA3AF; }
+  .resolution-panel .resolution-display { background: #f8fafc; border: 1px solid var(--border-light); border-radius: 6px; padding: 14px 16px; font-size: 13px; color: var(--near-black); line-height: 1.55; min-height: 60px; white-space: pre-wrap; }
+  .resolution-panel .resolution-empty { color: #9CA3AF; font-style: italic; }
+  .resolution-panel .resolution-meta { font-size: 11px; color: #9CA3AF; margin-top: 8px; }
+  .resolution-actions { display: flex; justify-content: flex-end; margin-top: 12px; gap: 8px; }
+  .resolution-comment { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border-light); }
+  .resolution-comment .field-label { color: #14B8A6; }
+
+  /* Feedback panel */
+  .feedback-panel { background: #fff; border: 1px solid #e2e8f0; border-top: none; border-radius: 0 0 8px 8px; padding: 24px; }
+  .feedback-panel h4 { font-size: 15px; font-weight: 700; color: var(--deep-navy); margin-bottom: 6px; }
+  .feedback-panel .panel-desc { font-size: 13px; color: #6B7280; line-height: 1.55; margin-bottom: 20px; }
+  .feedback-panel .field-label { font-size: 12px; font-weight: 700; color: #14B8A6; margin-bottom: 4px; }
+  .feedback-panel .field-hint { font-size: 11px; font-weight: 300; color: #9CA3AF; margin-bottom: 8px; }
+  .feedback-panel textarea { width: 100%; border: 1px solid var(--border-light); border-radius: 6px; padding: 12px 14px; font-family: 'Lato', sans-serif; font-size: 13px; color: var(--near-black); resize: vertical; min-height: 80px; background: #fff; }
+  .feedback-panel textarea::placeholder { color: #9CA3AF; }
+  .feedback-panel .feedback-display { background: #f8fafc; border: 1px solid var(--border-light); border-radius: 6px; padding: 14px 16px; font-size: 13px; color: var(--near-black); line-height: 1.55; white-space: pre-wrap; }
+  .feedback-panel .feedback-meta { font-size: 11px; color: #9CA3AF; margin-top: 8px; }
+
+  /* Star rating */
+  .star-rating { display: flex; gap: 4px; margin-bottom: 12px; }
+  .star-rating .star { font-size: 28px; cursor: pointer; color: var(--border-light); transition: color 0.1s ease; user-select: none; }
+  .star-rating .star.filled { color: #F59E0B; }
+  .star-rating .star:hover { color: #FBBF24; }
+  .rating-label { font-size: 12px; color: #6B7280; margin-bottom: 16px; }
+  .rating-labels { display: flex; justify-content: space-between; font-size: 10px; color: #9CA3AF; margin-top: 2px; width: 152px; }
+  .feedback-submitted { background: #D1FAE5; border: 1px solid #A7F3D0; border-radius: 6px; padding: 14px 16px; font-size: 13px; color: #065F46; display: flex; align-items: center; gap: 8px; }
+  .feedback-submitted .material-symbols-outlined { font-size: 18px; color: #059669; }
+
   /* Attachment upload */
   .attachment-drop { border: 2px dashed var(--border-light); border-radius: 8px; padding: 24px 20px; text-align: center; cursor: pointer; transition: all 0.15s ease; background: var(--white); }
   .attachment-drop:hover, .attachment-drop.dragover { border-color: #14B8A6; background: rgba(20,184,166,0.03); }
@@ -1335,6 +1379,10 @@
       submittedBy: 'Priya Sharma', submittedByInitials: 'PS', submittedByRole: 'client',
       created: '2026-02-10', updated: '2026-02-14',
       assignedTo: 'Nicole Croft',
+      resolutionNotes: 'CSS fix applied to the attachment preview component — replaced width:100% with max-width:100% and added object-fit:contain to preserve image aspect ratios. Fix deployed to production as part of the v3.2 release.',
+      resolutionDate: '2026-02-14', resolvedBy: 'Nicole Croft',
+      resolutionComment: '',
+      feedbackRating: 5, feedbackComment: 'Fast turnaround and great communication throughout. The fix works perfectly — floor plans now display correctly. Thank you!', feedbackDate: '2026-02-14',
       messages: [
         { author: 'Priya Sharma', initials: 'PS', role: 'client', time: '2026-02-10 16:00', body: 'When viewing attachments in the Housing module record view, image previews are stretched to full width instead of maintaining aspect ratio. Makes it difficult to review uploaded floor plans.' },
         { author: 'Nicole Croft', initials: 'NC', role: 'admin', time: '2026-02-12 11:20', body: 'Confirmed — this is a CSS issue on the attachment preview component. Fix has been deployed to the staging environment. Can you check on your end?' },
@@ -1370,6 +1418,10 @@
       submittedBy: 'Nicole Croft', submittedByInitials: 'NC', submittedByRole: 'admin',
       created: '2026-01-28', updated: '2026-02-03',
       assignedTo: 'Nicole Croft',
+      resolutionNotes: 'Added "Relationship to Client" dropdown field to the Emergency Contact section in the Person module. Values configured: Parent, Sibling, Spouse/Partner, Other Family, Friend, Case Worker, Other. Field is live and visible to all SSTS users.',
+      resolutionDate: '2026-02-03', resolvedBy: 'Nicole Croft',
+      resolutionComment: '',
+      feedbackRating: 4, feedbackComment: 'Exactly what we needed. Quick turnaround.', feedbackDate: '2026-02-03',
       messages: [
         { author: 'Nicole Croft', initials: 'NC', role: 'admin', time: '2026-01-28 15:00', body: 'SSTS needs a "Relationship to Client" dropdown field added to the Emergency Contact section. Values: Parent, Sibling, Spouse/Partner, Other Family, Friend, Case Worker, Other.' },
         { author: 'Nicole Croft', initials: 'NC', role: 'admin', time: '2026-02-03 11:00', body: 'Field has been added and is live. Closing this ticket.' }
@@ -1551,28 +1603,118 @@
 
       <div class="ticket-detail-body">
         <div>
-          <div class="ticket-conversation">
-            <div class="conversation-header">Conversation (${ticket.messages.length})</div>
-            <div class="conversation-messages">
-              ${ticket.messages.map(m => `
-                <div class="conv-message">
-                  <div class="conv-message-header">
-                    <div class="conv-message-avatar ${m.role}">${m.initials}</div>
-                    <span class="conv-message-name">${m.author}</span>
-                    <span class="conv-message-role ${m.role}-role">${m.role === 'admin' ? 'HelpSeeker' : ticket.org}</span>
-                    <span class="conv-message-time">${m.time}</span>
+          <!-- Detail tabs -->
+          <div class="detail-tabs">
+            <div class="detail-tab active" onclick="switchDetailTab('conversation','${ticket.id}')">Conversation</div>
+            <div class="detail-tab" onclick="switchDetailTab('resolution','${ticket.id}')">Resolution</div>
+            <div class="detail-tab" onclick="switchDetailTab('feedback','${ticket.id}')">Feedback</div>
+          </div>
+
+          <!-- Conversation panel -->
+          <div class="detail-panel active" id="panel-conversation">
+            <div class="ticket-conversation" style="border-top:none; border-radius: 0 0 8px 8px;">
+              <div class="conversation-header">Conversation (${ticket.messages.length})</div>
+              <div class="conversation-messages">
+                ${ticket.messages.map(m => `
+                  <div class="conv-message">
+                    <div class="conv-message-header">
+                      <div class="conv-message-avatar ${m.role}">${m.initials}</div>
+                      <span class="conv-message-name">${m.author}</span>
+                      <span class="conv-message-role ${m.role}-role">${m.role === 'admin' ? 'HelpSeeker' : ticket.org}</span>
+                      <span class="conv-message-time">${m.time}</span>
+                    </div>
+                    <div class="conv-message-body">${m.body}</div>
                   </div>
-                  <div class="conv-message-body">${m.body}</div>
-                </div>
-              `).join('')}
-            </div>
-            <div class="conv-reply">
-              <textarea id="replyText" placeholder="Type your reply..."></textarea>
-              <div class="conv-reply-actions">
-                <button class="btn-primary" onclick="submitReply('${ticket.id}')">
-                  <span class="material-symbols-outlined">send</span> Reply
-                </button>
+                `).join('')}
               </div>
+              <div class="conv-reply">
+                <textarea id="replyText" placeholder="Type your reply..."></textarea>
+                <div class="conv-reply-actions">
+                  <button class="btn-primary" onclick="submitReply('${ticket.id}')">
+                    <span class="material-symbols-outlined">send</span> Reply
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Resolution panel -->
+          <div class="detail-panel" id="panel-resolution">
+            <div class="resolution-panel">
+              <h4>Resolution</h4>
+              <p class="panel-desc">This tab shows how the reported issue or bug was addressed by the HelpSeeker team. It includes a summary of the actions taken to resolve the issue and any relevant notes about the outcome.</p>
+
+              <div class="field-label">Resolution Notes</div>
+              <div class="field-hint">Summary of how the task was resolved</div>
+              ${isAdmin ? `
+                <textarea id="resolutionNotes" placeholder="Describe how this issue was resolved, actions taken, and any relevant outcome notes...">${ticket.resolutionNotes || ''}</textarea>
+                <div class="resolution-actions">
+                  <button class="btn-primary" onclick="saveResolution('${ticket.id}')">
+                    <span class="material-symbols-outlined">save</span> Save Resolution
+                  </button>
+                </div>
+              ` : `
+                ${ticket.resolutionNotes
+                  ? `<div class="resolution-display">${ticket.resolutionNotes}</div>
+                     ${ticket.resolutionDate ? '<div class="resolution-meta">Resolved on ' + ticket.resolutionDate + (ticket.resolvedBy ? ' by ' + ticket.resolvedBy : '') + '</div>' : ''}`
+                  : '<div class="resolution-display resolution-empty">No resolution notes yet. The HelpSeeker team will add notes here once the issue is resolved.</div>'}
+              `}
+
+              <div class="resolution-comment">
+                <div class="field-label">Comment</div>
+                <textarea id="resolutionComment" placeholder="Add a comment about the resolution...">${ticket.resolutionComment || ''}</textarea>
+                <div class="resolution-actions">
+                  <button class="btn-primary" onclick="saveResolutionComment('${ticket.id}')">
+                    <span class="material-symbols-outlined">send</span> Save Comment
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Feedback panel -->
+          <div class="detail-panel" id="panel-feedback">
+            <div class="feedback-panel">
+              <h4>Feedback</h4>
+              <p class="panel-desc">This tab is for sharing your feedback after an issue has been resolved. Please rate your satisfaction using the 1–5 scale and, if you wish, add comments about your experience. Your feedback helps us improve our product, support process, and overall customer experience.</p>
+
+              ${ticket.feedbackRating ? `
+                <div class="feedback-submitted">
+                  <span class="material-symbols-outlined">check_circle</span>
+                  Feedback submitted — thank you!
+                </div>
+                <div style="margin-top:16px;">
+                  <div class="field-label">Satisfaction Rating</div>
+                  <div class="star-rating" style="pointer-events:none;">
+                    ${[1,2,3,4,5].map(n => `<span class="star ${n <= ticket.feedbackRating ? 'filled' : ''}">★</span>`).join('')}
+                  </div>
+                  <div class="rating-label">${['','1 — Very Dissatisfied','2 — Dissatisfied','3 — Neutral','4 — Satisfied','5 — Very Satisfied'][ticket.feedbackRating]}</div>
+                  ${ticket.feedbackComment ? `
+                    <div class="field-label" style="margin-top:12px;">Satisfaction Feedback</div>
+                    <div class="feedback-display">${ticket.feedbackComment}</div>
+                    ${ticket.feedbackDate ? '<div class="feedback-meta">Submitted on ' + ticket.feedbackDate + '</div>' : ''}
+                  ` : ''}
+                </div>
+              ` : `
+                <div class="field-label">Satisfaction Rating</div>
+                <div class="field-hint">1–5 rating scale</div>
+                <div class="star-rating" id="starRating">
+                  ${[1,2,3,4,5].map(n => `<span class="star" data-value="${n}" onclick="setRating(${n})" onmouseover="hoverRating(${n})" onmouseout="resetRatingHover()">★</span>`).join('')}
+                </div>
+                <div class="rating-labels"><span>Very Dissatisfied</span><span>Very Satisfied</span></div>
+                <div class="rating-label" id="ratingLabel" style="margin-top:8px;"></div>
+
+                <div style="margin-top:16px;">
+                  <div class="field-label">Satisfaction Feedback</div>
+                  <div class="field-hint">Customer feedback comments</div>
+                  <textarea id="feedbackComment" placeholder="Share any additional comments about your experience..."></textarea>
+                </div>
+                <div class="resolution-actions" style="margin-top:12px;">
+                  <button class="btn-primary" onclick="submitFeedback('${ticket.id}')">
+                    <span class="material-symbols-outlined">send</span> Submit Feedback
+                  </button>
+                </div>
+              `}
             </div>
           </div>
         </div>
@@ -1647,6 +1789,94 @@
 
     openTicketDetail(ticketId);
     showToast('Reply posted');
+  }
+
+  // ══════════════════════════════════════════
+  // DETAIL TABS (Conversation / Resolution / Feedback)
+  // ══════════════════════════════════════════
+
+  function switchDetailTab(tabName, ticketId) {
+    document.querySelectorAll('.detail-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('active'));
+    event.target.classList.add('active');
+    document.getElementById('panel-' + tabName).classList.add('active');
+  }
+
+  // ══════════════════════════════════════════
+  // RESOLUTION
+  // ══════════════════════════════════════════
+
+  function saveResolution(ticketId) {
+    const ticket = tickets.find(t => t.id === ticketId);
+    if (!ticket) return;
+    const notes = document.getElementById('resolutionNotes').value.trim();
+    if (!notes) { showToast('Please enter resolution notes'); return; }
+    ticket.resolutionNotes = notes;
+    ticket.resolutionDate = new Date().toISOString().slice(0, 10);
+    ticket.resolvedBy = CURRENT_USER.name;
+    ticket.updated = ticket.resolutionDate;
+    showToast('Resolution notes saved');
+  }
+
+  function saveResolutionComment(ticketId) {
+    const ticket = tickets.find(t => t.id === ticketId);
+    if (!ticket) return;
+    const comment = document.getElementById('resolutionComment').value.trim();
+    if (!comment) { showToast('Please enter a comment'); return; }
+    ticket.resolutionComment = comment;
+    ticket.updated = new Date().toISOString().slice(0, 10);
+    showToast('Comment saved');
+  }
+
+  // ══════════════════════════════════════════
+  // FEEDBACK (Star Rating + Comments)
+  // ══════════════════════════════════════════
+
+  let currentRating = 0;
+  const ratingLabels = ['', '1 — Very Dissatisfied', '2 — Dissatisfied', '3 — Neutral', '4 — Satisfied', '5 — Very Satisfied'];
+
+  function setRating(value) {
+    currentRating = value;
+    renderStars(value);
+    const labelEl = document.getElementById('ratingLabel');
+    if (labelEl) labelEl.textContent = ratingLabels[value];
+  }
+
+  function hoverRating(value) {
+    renderStars(value);
+  }
+
+  function resetRatingHover() {
+    renderStars(currentRating);
+  }
+
+  function renderStars(upTo) {
+    const stars = document.querySelectorAll('#starRating .star');
+    stars.forEach(s => {
+      const v = parseInt(s.dataset.value);
+      s.classList.toggle('filled', v <= upTo);
+    });
+  }
+
+  function submitFeedback(ticketId) {
+    const ticket = tickets.find(t => t.id === ticketId);
+    if (!ticket) return;
+    if (currentRating === 0) { showToast('Please select a satisfaction rating'); return; }
+    const comment = document.getElementById('feedbackComment').value.trim();
+    ticket.feedbackRating = currentRating;
+    ticket.feedbackComment = comment;
+    ticket.feedbackDate = new Date().toISOString().slice(0, 10);
+    ticket.updated = ticket.feedbackDate;
+    currentRating = 0;
+    openTicketDetail(ticketId);
+    // Re-switch to feedback tab
+    setTimeout(() => {
+      document.querySelectorAll('.detail-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.detail-tab')[2].classList.add('active');
+      document.getElementById('panel-feedback').classList.add('active');
+    }, 50);
+    showToast('Feedback submitted — thank you!');
   }
 
   function updateTicketField(ticketId, field, value) {
