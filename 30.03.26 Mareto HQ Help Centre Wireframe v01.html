@@ -268,6 +268,21 @@
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   .form-hint { font-size: 11px; font-weight: 300; color: #9CA3AF; margin-top: 4px; }
 
+  /* Attachment upload */
+  .attachment-drop { border: 2px dashed var(--border-light); border-radius: 8px; padding: 24px 20px; text-align: center; cursor: pointer; transition: all 0.15s ease; background: var(--white); }
+  .attachment-drop:hover, .attachment-drop.dragover { border-color: #14B8A6; background: rgba(20,184,166,0.03); }
+  .attachment-drop .material-symbols-outlined { font-size: 28px; color: #9CA3AF; margin-bottom: 6px; }
+  .attachment-drop p { font-size: 13px; color: #6B7280; }
+  .attachment-drop p span { color: #14B8A6; font-weight: 700; }
+  .attachment-drop .hint { font-size: 11px; color: #9CA3AF; margin-top: 4px; }
+  .attachment-list { margin-top: 10px; display: flex; flex-direction: column; gap: 6px; }
+  .attachment-item { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: #f8fafc; border: 1px solid var(--border-light); border-radius: 6px; font-size: 12px; }
+  .attachment-item .file-icon { color: #14B8A6; font-size: 18px; }
+  .attachment-item .file-name { flex: 1; color: var(--near-black); font-weight: 400; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .attachment-item .file-size { color: #9CA3AF; font-weight: 300; }
+  .attachment-item .remove-btn { border: none; background: none; color: #9CA3AF; cursor: pointer; font-size: 16px; padding: 0 2px; }
+  .attachment-item .remove-btn:hover { color: #DC2626; }
+
   .approval-notice { background: #FEF3C7; border: 1px solid #FDE68A; border-radius: 6px; padding: 12px 16px; font-size: 13px; color: #92400E; display: none; margin-bottom: 18px; align-items: flex-start; gap: 8px; }
   .approval-notice.visible { display: flex; }
   .approval-notice .material-symbols-outlined { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
@@ -1095,6 +1110,21 @@
         <label>Subject <span class="required">*</span></label>
         <input type="text" id="ticketSubject" placeholder="Brief description of your issue or request">
       </div>
+      <div class="form-group">
+        <label>Category <span class="required">*</span></label>
+        <select id="ticketCategory">
+          <option value="">Select category...</option>
+          <option value="Technical Support">Technical Support — Issues related to system functionality, bugs, errors</option>
+          <option value="Configuration & Setup">Configuration &amp; Setup — System configuration, settings, customization requests</option>
+          <option value="Training & Education">Training &amp; Education — Training requests, how-to questions, documentation</option>
+          <option value="Data & Reporting">Data &amp; Reporting — Data issues, report requests, analytics questions</option>
+          <option value="Account & Access">Account &amp; Access — User accounts, permissions, login issues</option>
+          <option value="Feature Request">Feature Request — New feature requests, enhancement suggestions</option>
+          <option value="Performance">Performance — Speed issues, system performance, optimization</option>
+          <option value="Security">Security — Security concerns, compliance, audit requests</option>
+          <option value="General Inquiry">General Inquiry — General questions not fitting other categories</option>
+        </select>
+      </div>
       <div class="form-row">
         <div class="form-group">
           <label>Ticket Type <span class="required">*</span></label>
@@ -1121,6 +1151,16 @@
         <label>Description <span class="required">*</span></label>
         <textarea id="ticketDesc" placeholder="Please describe the issue in detail. Include steps to reproduce for bugs, or the desired outcome for feature requests."></textarea>
         <div class="form-hint">Include any relevant details: page name, module, steps to reproduce, expected vs. actual behavior.</div>
+      </div>
+      <div class="form-group">
+        <label>Attachments</label>
+        <div class="attachment-drop" id="attachmentDrop" onclick="document.getElementById('attachmentInput').click()">
+          <span class="material-symbols-outlined">cloud_upload</span>
+          <p><span>Click or drop files here</span> to upload</p>
+          <div class="hint">Screenshots, logs, documents — PNG, JPG, PDF, CSV up to 10 MB each</div>
+        </div>
+        <input type="file" id="attachmentInput" multiple accept=".png,.jpg,.jpeg,.gif,.pdf,.csv,.xlsx,.doc,.docx" style="display:none;" onchange="handleFileSelect(event)">
+        <div class="attachment-list" id="attachmentList"></div>
       </div>
     </div>
     <div class="modal-footer">
@@ -1542,6 +1582,7 @@
             <h4>Details</h4>
             <div class="ticket-info-row"><span class="label">Submitted by</span><span class="value">${ticket.submittedBy}</span></div>
             <div class="ticket-info-row"><span class="label">Organization</span><span class="value">${ticket.org}</span></div>
+            ${ticket.category ? `<div class="ticket-info-row"><span class="label">Category</span><span class="value">${ticket.category}</span></div>` : ''}
             <div class="ticket-info-row"><span class="label">Created</span><span class="value">${ticket.created}</span></div>
             <div class="ticket-info-row"><span class="label">Last updated</span><span class="value">${ticket.updated}</span></div>
             <div class="ticket-info-row"><span class="label">Assigned to</span><span class="value">${ticket.assignedTo || 'Unassigned'}</span></div>
@@ -1620,13 +1661,76 @@
   // NEW TICKET MODAL
   // ══════════════════════════════════════════
 
+  // Pending attachments for new ticket
+  let pendingAttachments = [];
+
+  function handleFileSelect(event) {
+    const files = Array.from(event.target.files);
+    files.forEach(file => {
+      if (file.size > 10 * 1024 * 1024) {
+        showToast(`File "${file.name}" exceeds 10 MB limit`);
+        return;
+      }
+      pendingAttachments.push({ name: file.name, size: file.size, type: file.type });
+    });
+    renderAttachmentList();
+    event.target.value = '';
+  }
+
+  function removeAttachment(index) {
+    pendingAttachments.splice(index, 1);
+    renderAttachmentList();
+  }
+
+  function renderAttachmentList() {
+    const list = document.getElementById('attachmentList');
+    if (pendingAttachments.length === 0) { list.innerHTML = ''; return; }
+    list.innerHTML = pendingAttachments.map((f, i) => {
+      const sizeStr = f.size < 1024 ? f.size + ' B'
+        : f.size < 1024 * 1024 ? (f.size / 1024).toFixed(1) + ' KB'
+        : (f.size / (1024 * 1024)).toFixed(1) + ' MB';
+      return `<div class="attachment-item">
+        <span class="material-symbols-outlined file-icon">attach_file</span>
+        <span class="file-name">${f.name}</span>
+        <span class="file-size">${sizeStr}</span>
+        <button class="remove-btn" onclick="removeAttachment(${i})" title="Remove">&times;</button>
+      </div>`;
+    }).join('');
+  }
+
+  // Drag and drop handlers
+  (function() {
+    const drop = document.getElementById('attachmentDrop');
+    if (!drop) return;
+    ['dragenter','dragover'].forEach(evt => {
+      drop.addEventListener(evt, e => { e.preventDefault(); drop.classList.add('dragover'); });
+    });
+    ['dragleave','drop'].forEach(evt => {
+      drop.addEventListener(evt, e => { e.preventDefault(); drop.classList.remove('dragover'); });
+    });
+    drop.addEventListener('drop', e => {
+      const files = Array.from(e.dataTransfer.files);
+      files.forEach(file => {
+        if (file.size > 10 * 1024 * 1024) {
+          showToast(`File "${file.name}" exceeds 10 MB limit`);
+          return;
+        }
+        pendingAttachments.push({ name: file.name, size: file.size, type: file.type });
+      });
+      renderAttachmentList();
+    });
+  })();
+
   function openNewTicketModal() {
     document.getElementById('newTicketModal').classList.add('active');
     document.getElementById('ticketSubject').value = '';
+    document.getElementById('ticketCategory').value = '';
     document.getElementById('ticketType').value = '';
     document.getElementById('ticketPriority').value = '';
     document.getElementById('ticketDesc').value = '';
     document.getElementById('approvalNotice').classList.remove('visible');
+    pendingAttachments = [];
+    renderAttachmentList();
   }
 
   function closeNewTicketModal() {
@@ -1638,6 +1742,9 @@
     const notice = document.getElementById('approvalNotice');
     if (type === 'Feature Request') {
       notice.classList.add('visible');
+      // Auto-set category to Feature Request if not already set
+      const catSelect = document.getElementById('ticketCategory');
+      if (!catSelect.value) catSelect.value = 'Feature Request';
     } else {
       notice.classList.remove('visible');
     }
@@ -1645,11 +1752,12 @@
 
   function submitTicket() {
     const subject = document.getElementById('ticketSubject').value.trim();
+    const category = document.getElementById('ticketCategory').value;
     const type = document.getElementById('ticketType').value;
     const priority = document.getElementById('ticketPriority').value;
     const desc = document.getElementById('ticketDesc').value.trim();
 
-    if (!subject || !type || !priority || !desc) {
+    if (!subject || !category || !type || !priority || !desc) {
       showToast('Please fill in all required fields');
       return;
     }
@@ -1659,9 +1767,17 @@
     const timeStr = dateStr + ' ' +
       String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
 
+    // Build description with attachment info
+    let fullBody = desc;
+    if (pendingAttachments.length > 0) {
+      fullBody += '\n\nAttachments (' + pendingAttachments.length + '): ' +
+        pendingAttachments.map(a => a.name).join(', ');
+    }
+
     const newTicket = {
       id: 'TKT-' + (nextTicketId++),
       subject: subject,
+      category: category,
       type: type,
       priority: priority,
       status: 'New',
@@ -1672,12 +1788,13 @@
       created: dateStr,
       updated: dateStr,
       assignedTo: '',
+      attachments: [...pendingAttachments],
       messages: [{
         author: CURRENT_USER.name,
         initials: CURRENT_USER.initials,
         role: CURRENT_USER.role === 'admin' ? 'admin' : 'client',
         time: timeStr,
-        body: desc
+        body: fullBody
       }]
     };
 
