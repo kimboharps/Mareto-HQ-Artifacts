@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Person Module — Searching, Creating & Managing Person Records | Mareto HQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Lato', -apple-system, BlinkMacSystemFont, sans-serif; background: #f0f2f5; color: #1a1a2e; }
+
+  /* Header */
+  .header { display: flex; align-items: center; justify-content: space-between; background: #fff; border-bottom: 1px solid #e2e8f0; padding: 10px 24px; height: 56px; }
+  .header-left { display: flex; align-items: center; gap: 12px; }
+  .header-left .logo { width: 36px; height: 36px; background: #0B1F33; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+  .header-left .logo svg { width: 20px; height: 20px; }
+  .header-left h1 { font-size: 20px; font-weight: 700; color: #0B1F33; }
+  .header-left .powered { font-size: 12px; color: #14B8A6; font-weight: 500; margin-left: -4px; }
+  .back-link { font-size: 13px; color: #14B8A6; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 6px; }
+  .back-link:hover { text-decoration: underline; }
+
+  /* Content */
+  .content { max-width: 960px; margin: 32px auto; padding: 0 24px; }
+
+  /* Breadcrumb */
+  .breadcrumb { font-size: 12px; color: #94a3b8; margin-bottom: 20px; }
+  .breadcrumb a { color: #14B8A6; text-decoration: none; font-weight: 500; }
+  .breadcrumb a:hover { text-decoration: underline; }
+
+  /* Video Container */
+  .video-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .video-wrapper { position: relative; background: #0B1F33; }
+  video { width: 100%; display: block; max-height: 540px; background: #000; }
+
+  /* Info Section */
+  .video-info { padding: 24px 28px; }
+  .video-info .module-tag { display: inline-block; background: #f0fdfa; color: #14B8A6; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; padding: 4px 10px; border-radius: 4px; text-transform: uppercase; margin-bottom: 12px; }
+  .video-info h2 { font-size: 22px; font-weight: 700; color: #0B1F33; margin-bottom: 8px; }
+  .video-info .description { font-size: 14px; color: #64748b; line-height: 1.6; margin-bottom: 16px; }
+  .video-meta { display: flex; gap: 20px; font-size: 12px; color: #94a3b8; border-top: 1px solid #f1f5f9; padding-top: 16px; }
+  .video-meta span { display: flex; align-items: center; gap: 6px; }
+  .video-meta svg { width: 14px; height: 14px; }
+
+  /* Tags */
+  .tags { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+  .tags span { background: #f1f5f9; color: #64748b; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 4px; }
+
+  /* Footer */
+  .footer { text-align: center; padding: 32px 24px; font-size: 12px; color: #94a3b8; }
+  .footer a { color: #14B8A6; text-decoration: none; font-weight: 600; }
+  .footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#14B8A6" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      </div>
+      <div>
+        <h1>Mareto HQ</h1>
+        <div class="powered">Powered by HelpSeeker Technologies</div>
+      </div>
+    </div>
+    <a class="back-link" href="https://kimboharps.github.io/Mareto-HQ-Artifacts/30.03.26%20Mareto%20HQ%20Help%20Centre%20Wireframe%20v01.html">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to Help Centre
+    </a>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="https://kimboharps.github.io/Mareto-HQ-Artifacts/30.03.26%20Mareto%20HQ%20Help%20Centre%20Wireframe%20v01.html">Help Centre</a>
+      &nbsp;&rsaquo;&nbsp; Artifact Library
+      &nbsp;&rsaquo;&nbsp; The Person Module
+    </div>
+
+    <!-- Video Card -->
+    <div class="video-card">
+      <div class="video-wrapper">
+        <video controls preload="metadata" poster="">
+          <source src="https://kimboharps.github.io/Mareto-HQ-Artifacts/videos/The%20Person%20Module%20Searching%2C%20Creating%20%26%20Managing%20Person%20Records%20Video.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="video-info">
+        <span class="module-tag">Person Registry</span>
+        <h2>The Person Module — Searching, Creating & Managing Person Records</h2>
+        <p class="description">Learn how to search for existing person records, create new ones, and manage person profiles within Mareto's Person Registry. This video covers the key workflows for finding, adding, and updating person information.</p>
+        <div class="video-meta">
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            April 2026
+          </span>
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Video Tutorial
+          </span>
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Person Registry
+          </span>
+        </div>
+        <div class="tags">
+          <span>Person Registry</span>
+          <span>Search</span>
+          <span>Data Entry</span>
+          <span>Records Management</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <a href="https://kimboharps.github.io/Mareto-HQ-Artifacts/30.03.26%20Mareto%20HQ%20Help%20Centre%20Wireframe%20v01.html">Return to Help Centre</a>
+    &nbsp;&middot;&nbsp; Mareto HQ &nbsp;&middot;&nbsp; Powered by HelpSeeker Technologies
+  </div>
+
+</body>
+</html>
