@@ -519,10 +519,10 @@
       <div class="tab-content active" id="tab-home">
         <div class="welcome-banner">
           <h2>Mareto Help Centre</h2>
-          <div class="subtitle">Find guides, submit support tickets, and stay up to date &mdash; all without leaving Mareto.</div>
+          <div class="subtitle">Guides, videos, FAQs, and announcements &mdash; all without leaving Mareto.</div>
           <div class="search-box">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input type="text" placeholder="Search guides, videos, announcements...">
+            <input type="text" id="homeSearchInput" placeholder="Search guides, videos, FAQs..." onkeydown="if(event.key==='Enter')homeSearch()">
           </div>
         </div>
 
@@ -1387,6 +1387,26 @@
       applyFilters();
     });
   });
+
+  // Home page search — switches to Artifact Library with query applied
+  function homeSearch() {
+    var query = document.getElementById('homeSearchInput').value.trim();
+    if (!query) return;
+    // Switch to library tab
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    var libTab = document.querySelector('.tab[data-tab="library"]');
+    if (libTab) libTab.classList.add('active');
+    document.getElementById('tab-library').classList.add('active');
+    // Set query in library search box and trigger filter
+    var libInput = document.querySelector('#tab-library .search-box input');
+    if (libInput) {
+      libInput.value = query;
+      searchQuery = query.toLowerCase();
+      applyFilters();
+    }
+    document.getElementById('homeSearchInput').value = '';
+  }
 
   // Search box in library tab
   const libSearchInput = document.querySelector('#tab-library .search-box input');
