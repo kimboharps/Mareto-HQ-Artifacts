@@ -548,21 +548,16 @@
 
         <div class="section-header">
           <h3>Latest Announcements</h3>
-          <a class="view-all" href="#">View all &rarr;</a>
+          <a class="view-all" href="#" onclick="switchTab('announcements');return false;">View all &rarr;</a>
         </div>
-        <div class="announcement-item">
-          <span class="tag high">HIGH</span>
-          <div class="text">
-            <h4>Teams now live in Mareto! No more FRFs &mdash; all requests through the database.</h4>
-            <div class="meta">February 18, 2026 &middot; Contact Ashley K. with questions</div>
-          </div>
-        </div>
-        <div class="announcement-item">
+        <div id="home-announcements">
+        <div class="announcement-item" data-expires="2026-05-13">
           <span class="tag update">UPDATE</span>
           <div class="text">
-            <h4>Mareto v3.2 Release: New reporting filters and bulk export improvements</h4>
-            <div class="meta">February 10, 2026</div>
+            <h4>New Help Centre launched! Access guides, videos, and support all from Mareto Help Centre.</h4>
+            <div class="meta">April 13, 2026</div>
           </div>
+        </div>
         </div>
 
         <!-- HIDDEN FOR NOW – uncomment to restore onboarding checklist
@@ -1076,7 +1071,7 @@
           <p>Release notes, system updates, and important notices from HelpSeeker.</p>
         </div>
 
-        <div class="announcement-item">
+        <div class="announcement-item" data-expires="2026-05-13">
           <span class="tag update">UPDATE</span>
           <div class="text">
             <h4>New Help Centre launched! Access guides, videos, and support all from Mareto Help Centre.</h4>
@@ -1334,6 +1329,16 @@
 </div>
 
 <script>
+  // Expire announcements after their data-expires date (30 days from posting)
+  (function() {
+    var today = new Date().toISOString().slice(0, 10);
+    document.querySelectorAll('.announcement-item[data-expires]').forEach(function(item) {
+      if (today > item.getAttribute('data-expires')) {
+        item.style.display = 'none';
+      }
+    });
+  })();
+
   // Tab switching
   document.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', () => {
